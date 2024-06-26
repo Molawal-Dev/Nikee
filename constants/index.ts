@@ -1,21 +1,22 @@
 export const links = [
-    {
-        name: 'Home',
-        href: '/'
-    },
-    {
-        name: 'Men',
-        href: '/Men'
-    },
-    {
-        name: 'Women',
-        href: '/Women'
-    },
-    {
-        name: 'Children & Teens',
-        href: '/Children'
-    }
-]
+  {
+    name: 'Home',
+    href: '/'
+  },
+  {
+    name: 'Men',
+    href: '/productCategory/Men'
+  },
+  {
+    name: 'Women',
+    href: '/productCategory/Women'
+  },
+  {
+    name: 'Children & Teens',
+    href: '/productCategory/Children'
+  }
+];
+
 
 export const itemFilter = [
     {

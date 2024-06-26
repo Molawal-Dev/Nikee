@@ -13,7 +13,7 @@ const Rating = ({ rating, ratersCount }: RatingProp) => {
         <Star size={18} />
       </div>
 
-      {ratersCount && <p className="text-gray-600"> Ratings</p>}
+      {ratersCount && <p className="text-gray-600"> {ratersCount} Ratings</p>}
     </div>
   );
 };

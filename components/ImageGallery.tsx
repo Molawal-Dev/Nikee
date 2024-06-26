@@ -16,7 +16,7 @@ const ImageGallery = ({ images }: ImageGalleryProp) => {
   };
 
   return (
-    <div className="grid gap-4 lg:grid-cols-5">
+    <div className="grid gap-4 lg:grid-cols-5 mb-8">
       <div className="order-last flex gap-4 lg:order-none lg:flex-col">
         {images.map((image: any, index: any) => (
           <div key={index} className="overflow-hidden rounded-lg bg-gray-100">

@@ -20,4 +20,5 @@ export interface productFullDetailTypes {
     itemCategory: string;
     description: string;
     images: any;
+    imageUrl: string;
 }

@@ -12,7 +12,7 @@ const HeroSection = () => {
         </h1>
         <Link
           className="text-white flex items-center justify-center bg-black w-28 p-3 rounded-lg"
-          href="/AllProducts"
+          href="/allProducts"
         >
           Shop now
         </Link>
