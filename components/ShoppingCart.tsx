@@ -18,12 +18,36 @@ const ShoppingCart = () => {
   const toggleSheet = useStore((state) => state.toggleSheet);
   const removeItem = useStore((state) => state.removeFromCart);
   const clearCart = useStore((state) => state.clearCart);
+  const incrementQuantity = useStore((state) => state.incrementQuantity);
+  const decrementQuantity = useStore((state) => state.decrementQuantity);
 
   // Calculate total price based on items in cart
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  // checkout to navigate to stripe page
+  const checkout = async () => {
+    await fetch("http://localhost:3000/api/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ products: cartItems }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        console.log(response);
+
+        //goes to payment successful when payment is made.
+        if (response.url) {
+          window.location.href = response.url;
+        }
+      });
+  };
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={toggleSheet}>
@@ -64,7 +88,23 @@ const ShoppingCart = () => {
                         </p>
                       </div>
                       <div className="flex-1 flex items-end justify-between text-sm">
-                        <p className="text-gray-500">Qty: {item.quantity}</p>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            className="text-lg text-black hover:bg-orange-500 bg-primary py-0.5 px-2 rounded-sm"
+                            onClick={() => decrementQuantity(item._id)}
+                          >
+                            -
+                          </button>
+                          <p className="text-gray-500">Qty: {item.quantity}</p>
+                          <button
+                            type="button"
+                            className="text-lg text-black hover:bg-orange-500 bg-primary py-0.5 px-2 rounded-sm"
+                            onClick={() => incrementQuantity(item._id)}
+                          >
+                            +
+                          </button>
+                        </div>
                         <div className="flex">
                           <button
                             type="button"
@@ -94,27 +134,30 @@ const ShoppingCart = () => {
             </ul>
           </div>
           {/* Total Price, Checkout Button, and clear cart button */}
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex justify-between text-base font-medium text-gray-900">
-              <p>Total Price</p>
-              <p>${totalPrice.toFixed(2)}</p>
+          {cartItems.length > 0 && (
+            <div className="p-4 border-t border-gray-200">
+              <div className="flex justify-between text-base font-medium text-gray-900">
+                <p>Total Price</p>
+                <p>${totalPrice.toFixed(2)}</p>
+              </div>
+              <div className="flex gap-2 mt-3">
+                <Button
+                  variant={"default"}
+                  className="flex-1 py-2 text-white rounded-lg transition-colors duration-300 font-bold"
+                  onClick={checkout}
+                >
+                  Checkout
+                </Button>
+                <Button
+                  variant={"default"}
+                  className="flex-1 py-2 bg-black text-white rounded-lg transition-colors duration-300 font-bold"
+                  onClick={clearCart}
+                >
+                  Clear Cart
+                </Button>
+              </div>
             </div>
-            <div className="flex gap-2 mt-3">
-              <Button
-                variant={"default"}
-                className="flex-1 py-2 text-white rounded-lg transition-colors duration-300 font-bold"
-              >
-                Checkout
-              </Button>
-              <Button
-                variant={"default"}
-                className="flex-1 py-2 bg-black text-white rounded-lg transition-colors duration-300 font-bold"
-                onClick={clearCart}
-              >
-                Clear Cart
-              </Button>
-            </div>
-          </div>
+          )}
         </div>
       </SheetContent>
     </Sheet>

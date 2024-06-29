@@ -80,7 +80,11 @@ const ItemCategoryPage = ({ params }: { params: { itemCategory: string } }) => {
   const totalPages = Math.ceil(data.length / productsPerPage);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-full mt-[45vh]">
+        <div className="loader"></div>
+      </div>
+    );
   }
 
   if (!data || data.length === 0) {

@@ -55,13 +55,21 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
     fetchData();
   }, [params.slug]);
 
+  // whilst data loads
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-full mt-[45vh]">
+        <div className="loader"></div>
+      </div>
+    );
   }
 
   if (!data) {
     return <div>No product found.</div>;
   }
+
+  // checkout to navigate to stripe page
+  const checkout = async () => {};
 
   return (
     <div className="mt-14 px-4 sm:px-6 lg:px-8">
@@ -101,8 +109,19 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-2.5">
-              <Button className="w-full sm:w-auto" onClick={() => handleClick(data)}>Add To Cart</Button>
-              <Button className="w-full sm:w-auto" variant={"secondary"}>Buy Now</Button>
+              <Button
+                className="w-full sm:w-auto"
+                onClick={() => handleClick(data)}
+              >
+                Add To Cart
+              </Button>
+              <Button
+                className="w-full sm:w-auto"
+                variant={"secondary"}
+                onClick={checkout}
+              >
+                Buy Now
+              </Button>
             </div>
 
             <p className="mt-6 text-base text-gray-500 tracking-wide">
