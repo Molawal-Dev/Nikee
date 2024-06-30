@@ -51,7 +51,7 @@ const ShoppingCart = () => {
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={toggleSheet}>
-      <SheetContent className="sm:max-w-lg w-[90vw]">
+      <SheetContent className="sm:max-w-lg w-[90vw] px-3 pr-0">
         <SheetHeader className="flex justify-center">
           <SheetTitle className="font-bold text-2xl text-primary">
             Shopping Cart
@@ -59,7 +59,7 @@ const ShoppingCart = () => {
         </SheetHeader>
 
         <div className="h-full flex flex-col justify-between">
-          <div className="mt-2 flex-1 overflow-y-auto">
+          <div className="mt-2 flex-1 overflow-y-auto px-1 pr-2">
             <ul className="divide-y divide-gray-200">
               {cartItems.length !== 0 ? (
                 cartItems.map((item) => (
@@ -119,7 +119,7 @@ const ShoppingCart = () => {
                   </li>
                 ))
               ) : (
-                <div className="w-full h-full flex flex-col justify-center items-center gap-3 text-center">
+                <div className="w-full h-full flex flex-col justify-center items-center gap-3 text-center mt-36">
                   <Image
                     src="/images/emptyCart.png"
                     alt="Empty Cart"
@@ -135,7 +135,7 @@ const ShoppingCart = () => {
           </div>
           {/* Total Price, Checkout Button, and clear cart button */}
           {cartItems.length > 0 && (
-            <div className="p-4 border-t border-gray-200">
+            <div className="p-4 pr-7 border-t border-gray-200">
               <div className="flex justify-between text-base font-medium text-gray-900">
                 <p>Total Price</p>
                 <p>${totalPrice.toFixed(2)}</p>

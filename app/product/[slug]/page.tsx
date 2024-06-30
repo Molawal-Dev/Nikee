@@ -14,6 +14,7 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
   const [data, setData] = useState<productFullDetailTypes | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const [isBuyNowClicked, setIsBuyNowClicked] = useState(false);
 
   // Get the addItem function from Zustand store
   const addItem = useStore((state) => state.addToCart);
@@ -21,7 +22,10 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
   // Handle click function to add item to cart and show toast
   const handleClick = (product: productFullDetailTypes) => {
     addItem(product);
-    toast({ title: "Item added to Cart" });
+    toast({
+      title: "Item added to Cart",
+      className: "custom-toast",
+    });
   };
 
   useEffect(() => {
@@ -69,7 +73,28 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
   }
 
   // checkout to navigate to stripe page
-  const checkout = async () => {};
+  const checkout = async () => {
+    setIsBuyNowClicked(true);
+
+    await fetch("http://localhost:3000/api/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ products: [{ ...data, quantity: 1 }] }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        console.log(response);
+
+        //goes to payment successful when payment is made.
+        if (response.url) {
+          window.location.href = response.url;
+        }
+      });
+  };
 
   return (
     <div className="mt-14 px-4 sm:px-6 lg:px-8">
@@ -116,7 +141,9 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
                 Add To Cart
               </Button>
               <Button
-                className="w-full sm:w-auto"
+                className={`w-full sm:w-auto bg-black text-white ${
+                  isBuyNowClicked ? "bg-gray-300 text-gray-900" : ""
+                }`}
                 variant={"secondary"}
                 onClick={checkout}
               >

@@ -40,7 +40,10 @@ const ProductCategoryPage = ({
   // Handle click function to add item to cart and show toast
   const handleClick = (product: productTypes) => {
     addItem(product);
-    toast({ title: "Item added to Cart" });
+    toast({
+      title: "Item added to Cart",
+      className: "custom-toast",
+    });
   };
 
   useEffect(() => {

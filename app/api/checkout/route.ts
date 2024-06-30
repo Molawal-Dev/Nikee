@@ -27,7 +27,7 @@ export const POST = async(request: any) => {
 
             //it the product is not already existing
             if(stripeProduct === undefined){
-                const prod = await stripe.products.create({
+                await stripe.products.create({
                     name: product.name,
                     default_price_data:{
                         unit_amount: product.price * 100,
